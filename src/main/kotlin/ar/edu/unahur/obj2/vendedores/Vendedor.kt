@@ -56,5 +56,5 @@ class ComercioCorresponsal(val ciudades: List<Ciudad>) : Vendedor() {
   }
 
   // Es influyente si ......
- fun esInfluyente() = ciudades.map { c -> c.provincia}.toSet().size >= 3 or ciudades.size >= 5
+  fun esInfluyente() = ciudades.map { c -> c.provincia}.toSet().size >= 3 || ciudades.size >= 5
 }
