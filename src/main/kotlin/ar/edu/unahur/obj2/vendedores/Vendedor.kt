@@ -35,6 +35,9 @@ class VendedorFijo(val ciudadOrigen: Ciudad) : Vendedor() {
   override fun puedeTrabajarEn(ciudad: Ciudad): Boolean {
     return ciudad == ciudadOrigen
   }
+
+  // Es influyente si ......
+    fun esInfluyente() = false
 }
 
 // A este tipo de List no se le pueden agregar elementos una vez definida
@@ -42,10 +45,16 @@ class Viajante(val provinciasHabilitadas: List<Provincia>) : Vendedor() {
   override fun puedeTrabajarEn(ciudad: Ciudad): Boolean {
     return provinciasHabilitadas.contains(ciudad.provincia)
   }
+
+  // Es influyente si ......
+  fun esInfluyente() = provinciasHabilitadas.sumBy { c -> c.poblacion } > 10000000
 }
 
 class ComercioCorresponsal(val ciudades: List<Ciudad>) : Vendedor() {
   override fun puedeTrabajarEn(ciudad: Ciudad): Boolean {
     return ciudades.contains(ciudad)
   }
+
+  // Es influyente si ......
+ fun esInfluyente() = ciudades.map { c -> c.provincia}.toSet().size >= 3 or ciudades.size >= 5
 }
