@@ -10,7 +10,7 @@ abstract class Vendedor {
   // Definimos el método abstracto.
   // Como no vamos a implementarlo acá, es necesario explicitar qué devuelve.
   abstract fun puedeTrabajarEn(ciudad: Ciudad): Boolean
-
+  abstract fun esInfluyente() : Boolean
   // En las funciones declaradas con = no es necesario explicitar el tipo
   fun esVersatil() =
     certificaciones.size >= 3
@@ -20,6 +20,11 @@ abstract class Vendedor {
   // Si el tipo no está declarado y la función no devuelve nada, se asume Unit (es decir, vacío)
   fun agregarCertificacion(certificacion: Certificacion) {
     certificaciones.add(certificacion)
+  }
+
+  // Agrego el sacar certificaciones
+  fun sacarCertificaciones(certificacion: Certificacion) {
+    certificaciones.remove(certificacion)
   }
 
   fun esFirme() = this.puntajeCertificaciones() >= 30
@@ -35,6 +40,9 @@ class VendedorFijo(val ciudadOrigen: Ciudad) : Vendedor() {
   override fun puedeTrabajarEn(ciudad: Ciudad): Boolean {
     return ciudad == ciudadOrigen
   }
+
+  // Es influyente si ......
+  override fun esInfluyente() = false
 }
 
 // A este tipo de List no se le pueden agregar elementos una vez definida
@@ -42,10 +50,25 @@ class Viajante(val provinciasHabilitadas: List<Provincia>) : Vendedor() {
   override fun puedeTrabajarEn(ciudad: Ciudad): Boolean {
     return provinciasHabilitadas.contains(ciudad.provincia)
   }
+
+  // Es influyente si ......
+  override fun esInfluyente() = provinciasHabilitadas.sumBy { c -> c.poblacion } >= 10000000
 }
 
-class ComercioCorresponsal(val ciudades: List<Ciudad>) : Vendedor() {
+// Comercio Corresponsal
+
+class ComercioCorresponsal : Vendedor(){
+  val ciudades = mutableListOf<Ciudad>()
+  fun agregarCiudades (ciudad : Ciudad) {
+    ciudades.add(ciudad)
+  }
+  fun sacarCiudades (ciudad: Ciudad) {
+    ciudades.remove(ciudad)
+  }
   override fun puedeTrabajarEn(ciudad: Ciudad): Boolean {
     return ciudades.contains(ciudad)
   }
+
+  // Es influyente si ......
+  override fun esInfluyente() = ciudades.map { c -> c.provincia}.toSet().size >= 3 || ciudades.size >= 5
 }
