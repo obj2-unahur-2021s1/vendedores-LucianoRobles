@@ -11,7 +11,7 @@ class VendedorTest : DescribeSpec({
   val buenosAires = Provincia (17000000 )
   val moronCity = Ciudad (buenosAires)
 
-  val laPampa = Provincia ( 70500000)
+  val laPampa = Provincia ( 9050000)
   val santaRosa = Ciudad (laPampa)
 
   val cordoba = Provincia(2000000)
@@ -115,9 +115,11 @@ class VendedorTest : DescribeSpec({
         viajante.esInfluyente().shouldBeFalse()
       }
     }
-    // Creo otro viajante con una lista de provincias habilitadas diferentes para el "Si es influyente
-    val viajante2 = Viajante(listOf(laPampa))
+
       describe("Viajante2 Influyente") {
+        // Creo otro viajante con una lista de provincias habilitadas diferentes para el "Si es influyente
+        val viajante2 = Viajante(listOf(laPampa,misiones))
+
         it("Si Es influyente"){
           viajante2.esInfluyente().shouldBeTrue()
         }

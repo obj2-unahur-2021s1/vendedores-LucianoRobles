@@ -12,4 +12,11 @@ class CentrosDeDistribution(val ciudad: Ciudad) {
         // Aca si no esta en la lista lo agrega
         else vendedores.add (vendedor)
     }
+
+    fun sacarVendedor (vendedor: Vendedor) {
+        vendedores.remove(vendedor)
+    }
+    // Devuelve el elemento maximo basado en el predicado.
+    fun vendedorEstrella() = vendedores.maxBy { c -> c.puntajeCertificaciones()}
+    
 }
