@@ -52,7 +52,7 @@ class Viajante(val provinciasHabilitadas: List<Provincia>) : Vendedor() {
   }
 
   // Es influyente si ......
-  override fun esInfluyente() = provinciasHabilitadas.sumBy { c -> c.poblacion } > 10000000
+  override fun esInfluyente() = provinciasHabilitadas.sumBy { c -> c.poblacion } >= 10000000
 }
 
 // Comercio Corresponsal
@@ -61,6 +61,9 @@ class ComercioCorresponsal : Vendedor(){
   val ciudades = mutableListOf<Ciudad>()
   fun agregarCiudades (ciudad : Ciudad) {
     ciudades.add(ciudad)
+  }
+  fun sacarCiudades (ciudad: Ciudad) {
+    ciudades.remove(ciudad)
   }
   override fun puedeTrabajarEn(ciudad: Ciudad): Boolean {
     return ciudades.contains(ciudad)
